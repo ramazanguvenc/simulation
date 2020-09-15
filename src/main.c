@@ -89,8 +89,6 @@ int main(int argc, char **argv)
 		ClearBackground(LIGHTGRAY);
         DrawText("SELECT NEW FOR STARTING SIMULATION!", 457, 250, 20, BLACK);
         
-        // DRAW
-        //GuiGrid((Rectangle){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT},40.0f, 2); // draw a grid
         
         int sz = 0;
         const int itemHeight = (GuiGetStyle(LISTVIEW, LIST_ITEMS_HEIGHT)+GuiGetStyle(LISTVIEW, LIST_ITEMS_PADDING));
@@ -127,7 +125,6 @@ int status = -1;
 
 int new(void)
 {
-    //connect to server (this can be replaced after I implemented the menu)
 
     
 
@@ -232,9 +229,9 @@ int new(void)
         z = dequeue(&queue);
         
         if(x != -66.6f){
-            playerPosition.x = (x/64.0) - 5.0;
-            playerPosition.y = z/40.0;
-            playerPosition.z = (y/48.0) - 5.0;
+            playerPosition.x = x;
+            playerPosition.y = y;
+            playerPosition.z = z;
         }
 
         //----------------------------------------------------------------------------------
@@ -250,13 +247,11 @@ int new(void)
             if (mouseOnText) DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
             else DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, DARKGRAY);
             DrawText(my_IP, textBox.x + 5, textBox.y + 8, 40, MAROON);
-            //DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
             DrawText("IP:", 8, 173, 33, BLACK);
             if (mouseOnText)
             {
                 if (letterCount < MAX_INPUT_CHARS)
                 {
-                    // Draw blinking underscore char
                     if (((framesCounter/20)%2) == 0) DrawText("_", textBox.x + 8 + MeasureText(my_IP, 40), textBox.y + 12, 40, MAROON);
                 }
                 else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
@@ -265,7 +260,7 @@ int new(void)
             if(status == -1) DrawText("Connection Failed", 10, 50, 20, RED);
             else DrawText("Connection Successful", 10, 50, 20, GREEN);
             DrawText("Press ESC to return", 10, 90, 20, BLACK);
-            char msg[128]; sprintf(msg,"x = %.2f, y = %.2f, z = %.2f", (playerPosition.x+5.0)*64.0, (playerPosition.z+5.0)*48.0, (playerPosition.y*40.0));
+            char msg[128]; sprintf(msg,"x = %.2f, y = %.2f, z = %.2f", playerPosition.x, playerPosition.y, playerPosition.z);
             DrawText(msg, 10, 140, 20, BLACK);
 
             BeginMode3D(camera);
@@ -277,7 +272,7 @@ int new(void)
 
             EndMode3D();
 
-            //DrawText("Move player with cursors to collide", 220, 40, 20, GRAY);
+            
 
             DrawFPS(10, 10);
 

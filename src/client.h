@@ -60,6 +60,7 @@ char* get_data_from_server(){
 }
 
 int close_port(){
+    write(sockfd, "e", 1);
     int flag = 1;
     setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&flag,sizeof(int));
     sockfd = -1;
